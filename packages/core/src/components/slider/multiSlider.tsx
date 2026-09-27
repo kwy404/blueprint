@@ -472,7 +472,9 @@ export class MultiSlider extends AbstractPureComponent<MultiSliderProps, SliderS
         if (labelValues !== undefined) {
             values = labelValues.slice();
         } else {
-            for (let i = min!; i < max! || Utils.approxEqual(i, max!); i += labelStepSize ?? 1) {
+            const stepSize = labelStepSize ?? 1;
+            // scale the tolerance to the step so that tiny steps don't render labels past max
+            for (let i = min!; i < max! || Utils.approxEqual(i, max!, stepSize * 0.00001); i += stepSize) {
                 values.push(i);
             }
         }

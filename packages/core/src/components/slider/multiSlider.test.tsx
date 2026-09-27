@@ -195,6 +195,12 @@ describe("<MultiSlider>", () => {
             assertLabelCount(wrapper, 6);
         });
 
+        it("does not render labels past max when labelStepSize is very small", () => {
+            // [0  0.00001  0.00002  ...  0.0001]
+            const wrapper = renderSlider({ labelStepSize: 0.00001, max: 0.0001, min: 0 });
+            assertLabelCount(wrapper, 11);
+        });
+
         it("renders result of labelRenderer() in each label", () => {
             const labelRenderer = (val: number) => val + "#";
             const wrapper = renderSlider({ labelRenderer, labelStepSize: 10, max: 50, min: 0 });
